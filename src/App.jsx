@@ -315,7 +315,7 @@ export default function App() {
       <header className="bg-[#14181C] text-[#EFEBE2] px-5 py-4 flex items-center justify-between sticky top-0 z-20">
         <button onClick={reset} className="flex items-center gap-2">
           <Gauge className="w-5 h-5 text-[#E8A33D]" strokeWidth={2.2} />
-          <span className="font-semibold tracking-tight text-lg">piesa.ro</span>
+          <span className="font-semibold tracking-tight text-lg">radarpiese.ro</span>
         </button>
         {step === 4 && (
           <div className="text-xs text-[#A9A398] text-right leading-tight">
@@ -671,7 +671,7 @@ export default function App() {
       {/* Footer */}
       <footer className="border-t border-[#D8D2C4] px-5 py-5 text-center">
         <p className="text-[11px] text-[#6B655A] leading-relaxed mb-2 max-w-xs mx-auto">
-          piesa.ro compară oferte de la furnizori terți. Nu vindem piese direct — te redirecționăm către magazinul ales.
+          radarpiese.ro compară oferte de la furnizori terți. Nu vindem piese direct — te redirecționăm către magazinul ales.
         </p>
         <div className="flex items-center justify-center gap-3 text-[11px]">
           <button onClick={() => setOpenLegal("comparator")} className="underline text-[#6B655A]">
@@ -703,7 +703,7 @@ export default function App() {
             {openLegal === "comparator" ? (
               <div className="text-[13px] text-[#3A3733] leading-relaxed flex flex-col gap-3">
                 <p>
-                  piesa.ro este un serviciu de comparare a prețurilor la piese auto OEM. Nu suntem vânzător, nu deținem
+                  radarpiese.ro este un serviciu de comparare a prețurilor la piese auto OEM. Nu suntem vânzător, nu deținem
                   stoc și nu procesăm plăți — afișăm ofertele disponibile la furnizori terți și te redirecționăm către
                   site-ul lor pentru finalizarea comenzii.
                 </p>
