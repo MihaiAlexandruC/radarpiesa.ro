@@ -440,36 +440,8 @@ const reset = () => {
                   </>
                 )}
               </div>
-            ) : (
-                  <>
-                    <div className="relative mb-3">
-                      <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#A9A398]" />
-                      <input
-                        value={brandQuery}
-                        onChange={(e) => setBrandQuery(e.target.value)}
-                        placeholder="Caută marca (ex. Volkswagen)"
-                        className="w-full bg-white border border-[#D8D2C4] rounded-lg pl-9 pr-3 py-2.5 text-sm outline-none focus:border-[#191B1D]"
-                      />
-                    </div>
-                    <div className="grid grid-cols-2 gap-2.5">
-                      {filteredBrands.map((b) => (
-                        <button
-                          key={b.id}
-                          onClick={() => setBrand(b)}
-                          className="bg-white border border-[#D8D2C4] rounded-lg py-4 px-3 text-left hover:border-[#191B1D] transition-colors"
-                        >
-                          <span className="font-medium text-sm">{b.name}</span>
-                        </button>
-                      ))}
-                    </div>
-                    {filteredBrands.length === 0 && (
-                      <div className="text-center text-sm text-[#6B655A] py-10">Nicio marcă găsită.</div>
-                    )}
-                  </>
-                )}
-              </div>
-            ) : (
-              <div>
+            ) : (            
+             <div>
                 <div className="relative mb-3">
                   <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#A9A398]" />
                   <input
