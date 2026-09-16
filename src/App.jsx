@@ -221,9 +221,9 @@ export default function App() {
             const artData = await apiGet(`/api/parts?vehicleId=${year.id}&categoryId=${c.id}`);
             const arts = extractList(artData);
             for (const a of arts) {
-              results.push({
-                name: a.description || a.articleName || "Piesă",
-                oem: (a.oemNumbers && a.oemNumbers[0]) || a.articleNumber || "—",
+             results.push({
+                name: a.articleProductName || "Piesă",
+                oem: a.articleNo || "—",
                 category: c.name || "Altele",
                 offers: SUPPLIERS.map((s, i) => {
                   const basePrice = 80 + (a.articleId % 400); // preț simulat, până conectăm feed-uri reale
