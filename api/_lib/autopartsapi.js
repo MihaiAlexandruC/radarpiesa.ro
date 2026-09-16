@@ -19,7 +19,7 @@ export async function fetchFromAutoPartsAPI(path) {
     throw err;
   }
 
-  const url = ${baseUrl.replace(/\/$/, "")}${path};
+  const url = `${baseUrl.replace(/\/$/, "")}${path}`;
   const res = await fetch(url, {
     headers: { "x-apiprofile-key": apiKey },
   });
@@ -33,7 +33,7 @@ export async function fetchFromAutoPartsAPI(path) {
   }
 
   if (!res.ok) {
-    const err = new Error(data.message || AutoPartsAPI a răspuns cu status ${res.status});
+    const err = new Error(data.message || `AutoPartsAPI a răspuns cu status ${res.status}`);
     err.status = res.status;
     err.upstream = data;
     throw err;
