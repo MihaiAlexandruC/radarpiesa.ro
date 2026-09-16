@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   }
   try {
     const data = await fetchFromAutoPartsAPI(
-      /api/models/list/type-id/${typeId}/manufacturer-id/${manufacturerId}/lang-id/${langId}/country-filter-id/${countryFilterId}
+      `/api/models/list/type-id/${typeId}/manufacturer-id/${manufacturerId}/lang-id/${langId}/country-filter-id/${countryFilterId}`
     );
     res.setHeader("Cache-Control", "s-maxage=86400");
     return res.status(200).json(data);
