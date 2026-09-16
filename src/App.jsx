@@ -1,6 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { Search, ChevronRight, MapPin, ExternalLink, Filter, Gauge, X, FileText, Upload, Check, AlertTriangle, Sparkles, Bell } from "lucide-react";
-
+import { Search, ChevronRight, ChevronLeft, MapPin, ExternalLink, Filter, Gauge, X, FileText, Upload, Check, AlertTriangle, Sparkles, Bell } from "lucide-react";
 // ---------- Mock data ----------
 const BRANDS = [
   { id: "vw", name: "Volkswagen" },
@@ -301,7 +300,7 @@ export default function App() {
     });
   }, [category, query, realParts]);
 
-  const reset = () => {
+const reset = () => {
     setBrand(null);
     setModel(null);
     setYear(null);
@@ -309,14 +308,27 @@ export default function App() {
     setQuery("");
   };
 
+  const goBack = () => {
+    if (year) setYear(null);
+    else if (model) setModel(null);
+    else if (brand) setBrand(null);
+  };
+
   return (
     <div className="min-h-screen w-full bg-[#EFEBE2] text-[#191B1D] font-sans">
       {/* Header */}
       <header className="bg-[#14181C] text-[#EFEBE2] px-5 py-4 flex items-center justify-between sticky top-0 z-20">
-        <button onClick={reset} className="flex items-center gap-2">
-          <Gauge className="w-5 h-5 text-[#E8A33D]" strokeWidth={2.2} />
-          <span className="font-semibold tracking-tight text-lg">radarpiese.ro</span>
-        </button>
+        <div className="flex items-center gap-3">
+          {step > 1 && (
+            <button onClick={goBack} aria-label="Înapoi" className="p-1 -ml-1 rounded hover:bg-white/10">
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+          )}
+          <button onClick={reset} className="flex items-center gap-2">
+            <Gauge className="w-5 h-5 text-[#E8A33D]" strokeWidth={2.2} />
+            <span className="font-semibold tracking-tight text-lg">RadarPiese.ro</span>
+          </button>
+        </div>
         {step === 4 && (
           <div className="text-xs text-[#A9A398] text-right leading-tight">
             <div className="text-[#E8A33D] font-medium">{brand.name} {modelLabel}</div>
