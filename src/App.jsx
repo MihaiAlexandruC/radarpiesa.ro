@@ -113,6 +113,7 @@ export default function App() {
   const [openLegal, setOpenLegal] = useState(null); // 'comparator' | 'privacy' | null
   const [searchMode, setSearchMode] = useState("vehicle"); // 'vehicle' | 'oem' | 'deviz'
   const [oemQuery, setOemQuery] = useState("");
+  const [brandQuery, setBrandQuery] = useState("");
   const [devizStatus, setDevizStatus] = useState("idle"); // 'idle' | 'processing' | 'done'
 
   // ---- Strat de date reale (AutoPartsAPI), cu fallback pe mock dacă API-ul nu e configurat ----
