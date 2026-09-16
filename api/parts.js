@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   }
   try {
     const data = await fetchFromAutoPartsAPI(
-      /api/articles/list/type-id/${typeId}/vehicle-id/${vehicleId}/category-id/${categoryId}/lang-id/${langId}
+      `/api/articles/list/type-id/${typeId}/vehicle-id/${vehicleId}/category-id/${categoryId}/lang-id/${langId}`
     );
     return res.status(200).json(data);
   } catch (err) {
