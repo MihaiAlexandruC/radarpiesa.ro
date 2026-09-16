@@ -273,8 +273,8 @@ export default function App() {
         .then((data) => {
           if (cancelled) return;
           const list = extractList(data).map((a) => ({
-            name: a.description || a.articleName || "Piesă",
-            oem: (a.oemNumbers && a.oemNumbers[0]) || q,
+            name: a.articleProductName || "Piesă",
+            oem: a.articleNo || q,
             offers: SUPPLIERS.map((s, i) => {
               const basePrice = 80 + ((a.articleId || q.length * 37) % 400);
               const variance = [0, 0.06, -0.04][i];
