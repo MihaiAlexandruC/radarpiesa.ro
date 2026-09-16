@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   }
   try {
     const data = await fetchFromAutoPartsAPI(
-      /api/articles-oem/search-by-article-oem-no?articleOemNo=${encodeURIComponent(code)}&langId=${langId}
+      `/api/articles-oem/search-by-article-oem-no?articleOemNo=${encodeURIComponent(code)}&langId=${langId}`
     );
     return res.status(200).json(data);
   } catch (err) {
