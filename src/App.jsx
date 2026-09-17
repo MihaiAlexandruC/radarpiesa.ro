@@ -185,13 +185,11 @@ export default function App() {
     apiGet(`/api/vehicles?modelId=${model.id}`)
       .then((data) => {
         if (cancelled) return;
-        const list = extractList(data).map((it) =>
-          normalizeItem(
-            it,
-            ["vehicleId", "id"],
-            ["vehicleName", "typeName", "description", "name"]
-          )
-        );
+const list = extractList(data).map((it) => ({
+          id: it.vehicleId,
+          name: it.powerPs ? ${it.typeEngineName} — ${it.powerPs} CP : it.typeEngineName || "Motorizare",
+          raw: it,
+        }));
         setVehicles(list);
       })
       .catch(() => {
