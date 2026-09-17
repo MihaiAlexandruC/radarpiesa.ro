@@ -187,7 +187,7 @@ export default function App() {
         if (cancelled) return;
 const list = extractList(data).map((it) => ({
           id: it.vehicleId,
-          name: it.powerPs ? ${it.typeEngineName} — ${it.powerPs} CP : it.typeEngineName || "Motorizare",
+          name: it.powerPs ? `${it.typeEngineName} — ${it.powerPs} CP` : it.typeEngineName || "Motorizare",
           raw: it,
         }));
         setVehicles(list);
