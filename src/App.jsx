@@ -134,9 +134,17 @@ export default function App() {
     apiGet("/api/manufacturers?typeId=1")
       .then((data) => {
         if (cancelled) return;
-        const list = extractList(data).map((it) =>
-          normalizeItem(it, ["manuId", "manufacturerId", "id"], ["manufacturerName", "name", "description"])
-        );
+const EU_BRANDS = [
+          "VOLKSWAGEN","BMW","MERCEDES-BENZ","AUDI","OPEL","FORD","RENAULT",
+          "PEUGEOT","CITROEN","FIAT","SKODA","SEAT","VOLVO","DACIA","TOYOTA",
+          "HONDA","HYUNDAI","KIA","NISSAN","MAZDA","MINI","PORSCHE",
+          "LAND ROVER","JAGUAR","ALFA ROMEO","LANCIA","SUZUKI","SMART","CUPRA"
+        ];
+        const list = extractList(data)
+          .map((it) =>
+            normalizeItem(it, ["manuId", "manufacturerId", "id"], ["manufacturerName", "name", "description"])
+          )
+          .filter((b) => EU_BRANDS.includes((b.name || "").toUpperCase()));
         if (list.length > 0) {
           setBrands(list);
           setDataSource("real");
