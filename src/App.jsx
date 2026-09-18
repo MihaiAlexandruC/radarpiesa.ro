@@ -94,6 +94,69 @@ async function apiGet(path) {
   }
   return data;
 }
+// Dicționar EN→RO pentru denumiri de categorii și piese venite din catalogul TecDoc,
+// care nu are întotdeauna traducere în română. Se completează treptat pe măsură ce
+// apar denumiri netraduse — dacă un termen lipsește, rămâne afișat în engleză (fallback sigur).
+const TRANSLATIONS = {
+  "brake pad set": "Set plăcuțe frână",
+  "brake pads": "Plăcuțe frână",
+  "brake disc": "Disc frână",
+  "brake discs": "Discuri frână",
+  "brake caliper": "Etrier frână",
+  "brake hose": "Furtun frână",
+  "brake fluid": "Lichid de frână",
+  "brake drum": "Tambur frână",
+  "brake shoe set": "Set saboți frână",
+  "oil filter": "Filtru ulei",
+  "air filter": "Filtru aer",
+  "cabin filter": "Filtru habitaclu",
+  "pollen filter": "Filtru polen",
+  "fuel filter": "Filtru combustibil",
+  "shock absorber": "Amortizor",
+  "shock absorbers": "Amortizoare",
+  "suspension": "Suspensie",
+  "stabilizer link": "Bieletă stabilizator",
+  "control arm": "Braț suspensie",
+  "wheel bearing": "Rulment roată",
+  "clutch kit": "Kit ambreiaj",
+  "clutch disc": "Disc ambreiaj",
+  "clutch": "Ambreiaj",
+  "timing belt": "Curea distribuție",
+  "timing belt kit": "Kit distribuție",
+  "drive belt": "Curea transmisie",
+  "alternator": "Alternator",
+  "starter": "Electromotor",
+  "battery": "Baterie",
+  "spark plug": "Bujie",
+  "glow plug": "Bujie incandescere",
+  "ignition coil": "Bobină aprindere",
+  "headlight": "Far",
+  "rear light": "Stop spate",
+  "mirror": "Oglindă",
+  "wiper blade": "Ștergător parbriz",
+  "radiator": "Radiator",
+  "water pump": "Pompă apă",
+  "thermostat": "Termostat",
+  "exhaust": "Eșapament",
+  "muffler": "Toba eșapament",
+  "engine mount": "Tampon motor",
+  "floor mat set": "Set covorașe",
+  "floor mats": "Covorașe",
+  "marten protection": "Protecție jderi",
+  "snow chains": "Lanțuri antiderapante",
+  "compressor": "Compresor",
+  "condenser": "Condensator AC",
+  "evaporator": "Vaporizator AC",
+  "hoses/pipe": "Furtunuri/Conducte",
+  "differential": "Diferențial",
+  "other": "Diverse",
+};
+
+function translate(text) {
+  if (!text) return text;
+  const key = text.trim().toLowerCase();
+  return TRANSLATIONS[key] || text;
+}
 
 // ---------- Component ----------
 export default function App() {
@@ -219,7 +282,7 @@ const list = extractList(data).map((it) => ({
         const catList = extractList(catData).map((it) =>
           normalizeItem(it, ["categoryId", "id"], ["categoryName", "name", "description"])
         );
-        const firstCats = catList.slice(0, 6); // limităm ca să nu consumăm tot cota gratuită dintr-o dată
+        const firstCats = catList.slice(0, 20); // mai multe categorii, ca să prindem și frâne/filtre
         const results = [];
         for (const c of firstCats) {
           if (cancelled) return;
@@ -228,9 +291,9 @@ const list = extractList(data).map((it) => ({
             const arts = extractList(artData);
             for (const a of arts) {
              results.push({
-                name: a.articleProductName || "Piesă",
+                name: translate(a.articleProductName) || "Piesă",
                 oem: a.articleNo || "—",
-                category: c.name || "Altele",
+                category: translate(c.name) || "Altele",
                 offers: SUPPLIERS.map((s, i) => {
                   const basePrice = 80 + (a.articleId % 400); // preț simulat, până conectăm feed-uri reale
                   const variance = [0, 0.06, -0.04][i];
