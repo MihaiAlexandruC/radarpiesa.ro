@@ -341,8 +341,8 @@ const list = extractList(data).map((it) => ({
       apiGet(`/api/oem-search?code=${encodeURIComponent(q)}`)
         .then((data) => {
           if (cancelled) return;
-          const list = extractList(data).map((a) => ({
-            name: a.articleProductName || "Piesă",
+        const list = extractList(data).map((a) => ({
+            name: translate(a.articleProductName) || "Piesă",
             oem: a.articleNo || q,
             offers: SUPPLIERS.map((s, i) => {
               const basePrice = 80 + ((a.articleId || q.length * 37) % 400);
