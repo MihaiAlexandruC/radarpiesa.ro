@@ -23,26 +23,57 @@ const YEARS = ["2010", "2012", "2014", "2016", "2018", "2020"];
 
 const CATEGORIES = ["Toate", "Frâne", "Filtre", "Suspensie", "Electrice", "Caroserie"];
 
+js
 const SUPPLIERS = [
   { id: "s1", name: "AutoDoc PL", country: "Polonia", quality: "OE supplier", shipping: 0, days: 4 },
   { id: "s2", name: "PiesePro RO", country: "România", quality: "Original", shipping: 15, days: 2 },
   { id: "s3", name: "TeilePartner DE", country: "Germania", quality: "Aftermarket premium", shipping: 22, days: 6 },
 ];
 
+// ---------- Linkuri de afiliat ----------
+// Pentru fiecare furnizor real cu care semnezi (2Performant, Profitshare, Awin etc.),
+// completează aici: (1) searchUrl — cum arată un link de căutare pe site-ul lor,
+// (2) affiliateId — codul tău de afiliat, primit după aprobare.
+// Până completezi affiliateId, linkul funcționează oricum (duce direct la furnizor),
+// doar că nu ești încă plătit pentru click — deci nu strică nimic dacă rămâne necompletat.
+const AFFILIATE_CONFIG = {
+  s1: {
+    searchUrl: (oem) => `https://www.autodoc.ro/cautare?keyword=${encodeURIComponent(oem)}`,
+    affiliateId: "", // TODO: afid primit de la Awin, după aprobarea la programul AutoDoc
+  },
+  s2: {
+    searchUrl: (oem) => `https://www.autoeco.ro/cauta?q=${encodeURIComponent(oem)}`,
+    affiliateId: "", // TODO: afid primit de la 2Performant/Profitshare, după aprobarea la AutoEco
+  },
+  s3: {
+    searchUrl: (oem) => `https://www.kfzteile24.de/search?q=${encodeURIComponent(oem)}`,
+    affiliateId: "", // TODO: afid primit de la Awin, după aprobarea la programul KFZTeile24
+  },
+};
+
+function buildAffiliateUrl(supplierId, oem) {
+  const cfg = AFFILIATE_CONFIG[supplierId];
+  if (!cfg) return "#";
+  const base = cfg.searchUrl(oem || "");
+  if (!cfg.affiliateId) return base;
+  const sep = base.includes("?") ? "&" : "?";
+  return `${base}${sep}afid=${encodeURIComponent(cfg.affiliateId)}`;
+}
+
 function makePart(name, oem, category, base) {
   const offers = SUPPLIERS.map((s, i) => {
     const variance = [0, 0.06, -0.04][i];
     const price = Math.round(base * (1 + variance));
-    const inStock = i !== 2 || base < 400; // al 3-lea furnizor "la comandă" pentru piese scumpe, ca variație
+    const inStock = i !== 2 || base < 400;
     return {
       ...s,
       price,
       totalPrice: price + s.shipping,
       inStock,
+      affiliateUrl: buildAffiliateUrl(s.id, oem),
     };
   }).sort((a, b) => a.totalPrice - b.totalPrice);
   return { name, oem, category, offers };
-}
 
 const PARTS_TEMPLATE = [
   makePart("Set plăcuțe frână față", "1K0698151", "Frâne", 180),
@@ -299,7 +330,7 @@ const list = extractList(data).map((it) => ({
                   const variance = [0, 0.06, -0.04][i];
                   const price = Math.round(basePrice * (1 + variance));
                   const inStock = i !== 2;
-                  return { ...s, price, totalPrice: price + s.shipping, inStock };
+                  return { ...s, price, totalPrice: price + s.shipping, inStock, affiliateUrl: buildAffiliateUrl(s.id, a.articleNo) };
                 }).sort((x, y) => x.totalPrice - y.totalPrice),
               });
             }
@@ -348,7 +379,7 @@ const list = extractList(data).map((it) => ({
               const basePrice = 80 + ((a.articleId || q.length * 37) % 400);
               const variance = [0, 0.06, -0.04][i];
               const price = Math.round(basePrice * (1 + variance));
-              return { ...s, price, totalPrice: price + s.shipping, inStock: i !== 2 };
+                return { ...s, price, totalPrice: price + s.shipping, inStock: i !== 2, affiliateUrl: buildAffiliateUrl(s.id, a.articleNo || q) };
             }).sort((x, y) => x.totalPrice - y.totalPrice),
           }));
           setOemLiveResults(list);
@@ -868,10 +899,14 @@ const reset = () => {
             </div>
 
             <div className="flex flex-col gap-2">
+ <div className="flex flex-col gap-2">
               {openPart.offers.map((o, i) => (
-                <div
+                <a
                   key={o.id}
-                  className={`rounded-lg p-3.5 border ${i === 0 ? "border-[#E8A33D] bg-[#FBF1DE]" : "border-[#D8D2C4] bg-white"}`}
+                  href={o.affiliateUrl}
+                  target="_blank"
+                  rel="noopener sponsored"
+                  className={`block rounded-lg p-3.5 border hover:opacity-90 transition-opacity ${i === 0 ? "border-[#E8A33D] bg-[#FBF1DE]" : "border-[#D8D2C4] bg-white"}`}
                 >
                   <div className="flex items-center justify-between gap-3">
                     <div className="min-w-0">
@@ -896,13 +931,18 @@ const reset = () => {
                       <div className="text-[10px] text-[#A9A398]">{o.price} lei + {o.shipping === 0 ? "transport gratuit" : `${o.shipping} lei transport`}</div>
                     </div>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
 
-            <button className="w-full mt-4 bg-[#14181C] text-[#EFEBE2] rounded-lg py-3 text-sm font-medium flex items-center justify-center gap-2">
+            <a
+              href={openPart.offers[0]?.affiliateUrl}
+              target="_blank"
+              rel="noopener sponsored"
+              className="w-full mt-4 bg-[#14181C] text-[#EFEBE2] rounded-lg py-3 text-sm font-medium flex items-center justify-center gap-2"
+            >
               Vezi oferta la furnizor <ExternalLink className="w-3.5 h-3.5" />
-            </button>
+            </a>
             <p className="text-[10px] text-[#A9A398] text-center mt-2">
               Ești redirecționat către site-ul furnizorului. Putem primi un comision, fără costuri suplimentare pentru tine.
             </p>
