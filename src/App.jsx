@@ -898,7 +898,6 @@ const reset = () => {
             </div>
 
             <div className="flex flex-col gap-2">
- <div className="flex flex-col gap-2">
               {openPart.offers.map((o, i) => (
                 <a
                   key={o.id}
