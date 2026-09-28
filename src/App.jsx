@@ -23,7 +23,6 @@ const YEARS = ["2010", "2012", "2014", "2016", "2018", "2020"];
 
 const CATEGORIES = ["Toate", "Frâne", "Filtre", "Suspensie", "Electrice", "Caroserie"];
 
-js
 const SUPPLIERS = [
   { id: "s1", name: "AutoDoc PL", country: "Polonia", quality: "OE supplier", shipping: 0, days: 4 },
   { id: "s2", name: "PiesePro RO", country: "România", quality: "Original", shipping: 15, days: 2 },
