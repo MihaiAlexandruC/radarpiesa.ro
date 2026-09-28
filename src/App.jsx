@@ -73,7 +73,7 @@ function makePart(name, oem, category, base) {
     };
   }).sort((a, b) => a.totalPrice - b.totalPrice);
   return { name, oem, category, offers };
-
+}
 const PARTS_TEMPLATE = [
   makePart("Set plăcuțe frână față", "1K0698151", "Frâne", 180),
   makePart("Disc frână față ventilat", "1K0615301AA", "Frâne", 220),
