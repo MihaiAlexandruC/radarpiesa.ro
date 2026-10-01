@@ -854,8 +854,8 @@ const reset = () => {
             ) : (
               <div className="text-[13px] text-[#3A3733] leading-relaxed flex flex-col gap-3">
                 <p>
-                  Colectăm datele minime necesare pentru funcționarea site-ului: căutările tale (marcă, model, an,
-                  piesă) și, dacă ai un cont, adresa de email.
+                  Operator: radarpiese.ro. Colectăm datele minime necesare pentru funcționarea site-ului: căutările
+                  tale (marcă, model, an, piesă) și, dacă ne contactezi, adresa de email pe care ne-o furnizezi.
                 </p>
                 <p>
                   Folosim cookie-uri tehnice, necesare pentru funcționarea site-ului, și cookie-uri de afiliere, care
@@ -866,7 +866,11 @@ const reset = () => {
                   Nu vindem datele tale către terți. Le folosim doar pentru a-ți afișa rezultate relevante și, dacă
                   ai consimțit, pentru comunicări legate de ofertele căutate.
                 </p>
-                <p>Îți poți cere oricând datele sau ștergerea lor, conform GDPR, la o adresă de contact dedicată.</p>
+                <p>
+                  Îți poți cere oricând acces la datele tale sau ștergerea lor, conform GDPR, scriindu-ne la{" "}
+                  <a href="mailto:contact@radarpiese.ro" className="underline">contact@radarpiese.ro</a>.
+                  {" "}Îți răspundem în maximum 30 de zile.
+                </p>
               </div>
             )}
           </div>
